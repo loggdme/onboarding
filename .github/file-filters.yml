@@ -1,0 +1,12 @@
+pipeline: &pipeline
+  - '.github/workflows/**'
+  - '.github/actions/**'
+  - '.github/file-filters.yml'
+
+frontend: &frontend
+  - *pipeline
+  - 'frontend/**'
+
+backend: &backend
+  - *pipeline
+  - 'backend/**'

@@ -1,0 +1,26 @@
+name: Changed Files
+
+on:
+  workflow_call:
+    outputs:
+      frontend:
+        value: ${{ jobs.files-changed.outputs.frontend }}
+      backend:
+        value: ${{ jobs.files-changed.outputs.backend }}
+
+jobs:
+  files-changed:
+    name: detect what files changed
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    outputs:
+      frontend: ${{ steps.changes.outputs.frontend }}
+      backend: ${{ steps.changes.outputs.backend }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check for repository file changes
+        uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          filters: ./.github/file-filters.yml

@@ -1,0 +1,30 @@
+{
+  "folders": [
+    { "path": "." },
+    { "path": "frontend" },
+    { "path": "backend" }
+  ],
+  "settings": {
+    "cSpell.language": "en,de-de",
+    "editor.unicodeHighlight.allowedCharacters": {
+      "️": true
+    },
+    "editor.bracketPairColorization.enabled": true,
+    "editor.guides.bracketPairs": "active",
+    "workbench.editor.labelFormat": "short",
+    "explorer.fileNesting.enabled": true,
+    "explorer.fileNesting.expand": false,
+    "explorer.autoReveal": false
+  },
+  "extensions": {
+    "recommendations": [
+      "arktypeio.arkdark",
+      "biomejs.biome",
+      "EditorConfig.EditorConfig",
+      "bradlc.vscode-tailwindcss",
+      "streetsidesoftware.code-spell-checker",
+      "github.vscode-github-actions",
+      "golang.go"
+    ]
+  }
+}
