@@ -46,7 +46,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - uses: Infisical/secrets-action@v1.0.11
+      - uses: Infisical/secrets-action@v1.0.12
         with:
           client-id: ${{ vars.INFISICAL_CLIENT_ID }}
           client-secret: ${{ secrets.INFISICAL_CLIENT_SECRET }}
@@ -95,7 +95,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - uses: Infisical/secrets-action@v1.0.11
+      - uses: Infisical/secrets-action@v1.0.12
         with:
           client-id: ${{ vars.INFISICAL_CLIENT_ID }}
           client-secret: ${{ secrets.INFISICAL_CLIENT_SECRET }}
