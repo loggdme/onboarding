@@ -1,0 +1,26 @@
+{
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.biome": "explicit",
+    "source.organizeImports.biome": "explicit",
+    "source.action.useSortedAttributes.biome": "explicit"
+  },
+
+  "editor.wordWrap": "on",
+  "explorer.fileNesting.patterns": {
+    "package.json": "bun.lock",
+    "biome.json": "tsconfig.json,.gitignore",
+    "vite.config.ts": "index.html,components.json"
+  },
+
+  "files.exclude": {
+    "**/node_modules": true
+  },
+
+  // Formatting
+  "biome.enabled": true,
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "[typescript][javascript][json][jsonc][css][html]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  }
+}

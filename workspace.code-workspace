@@ -2,7 +2,8 @@
   "folders": [
     { "path": "." },
     { "path": "frontend" },
-    { "path": "backend" }
+    { "path": "backend" },
+    { "path": "docs" }
   ],
   "settings": {
     "cSpell.language": "en,de-de",

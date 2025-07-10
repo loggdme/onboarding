@@ -1,0 +1,78 @@
+---
+title: Single Page Applications
+---
+
+# SPA Paradigm
+
+This chapter delves into the evolution and comparison of traditional web applications (Multi-Page Applications - MPAs) and modern Single-Page Applications (SPAs), culminating in the discussion of hybrid approaches.
+
+### Traditional Web Applications
+
+Traditional web applications, or MPAs, function much like a book, where each interaction (e.g., clicking a link, submitting a form) necessitates a complete reload of the entire page. This means a new HTML document, stylesheets, and images are fetched from the server with every navigation. While straightforward, this architecture can lead to increased latency, especially with slower internet connections, due to the full page rebuild required for each request. This also results in higher server load and inefficient bandwidth usage, as large amounts of data are transferred even for minor updates.
+
+### Functionality of Single Page Applications
+
+With the advent of Web 2.0, there was a growing demand for web applications that offer a desktop-like user experience. This spurred the development of SPAs, first conceptualized by Netscape in 2003. Unlike MPAs, SPAs load all necessary code, content, and logic onto a single HTML page during the initial request. Subsequent interactions and navigations do not require a full page reload; instead, the application dynamically updates relevant parts of the page using JavaScript. This aims to provide a fluid and interactive experience, mimicking desktop applications.
+
+However, the initial load of an SPA can be slower than an MPA because a larger JavaScript package, containing the entire application logic, needs to be downloaded and executed before content is displayed. Subsequent interactions, though, are much faster as only dynamic data needs to be fetched asynchronously, significantly reducing server requests and bandwidth usage.
+
+### Evaluation of SPA and MPA
+
+A crucial difference lies in navigation. While MPAs initiate a complete page reload with every navigation, SPAs, after the initial load, only update specific sections of the page. This results in significantly faster content display for SPAs during subsequent interactions. This efficiency makes SPAs particularly suitable for highly interactive applications like dashboards or social media platforms, where frequent view changes occur. Studies have shown that SPAs significantly improve the Quality of Experience (QoE) for users, leading to higher satisfaction and engagement.
+
+Furthermore, SPAs offer a decoupled presentation layer, meaning the frontend and backend can be developed and maintained independently. This separation allows for more efficient development and maintenance. SPAs can also offer offline support through Progressive Web App (PWA) concepts, allowing users to access the application even without an internet connection by caching resources in the browser.
+
+Despite these advantages, SPAs have drawbacks. Their heavy reliance on JavaScript means that if JavaScript is disabled in a user's browser, the application may not function or even appear blank. The most significant disadvantage, however, is the difficulty in implementing Search Engine Optimization (SEO). Traditional search engine crawlers struggle to execute JavaScript, making it challenging for them to fully index SPA content. This can lead to poorer search engine rankings compared to MPAs, which primarily deliver static HTML.
+
+### Hybrid Approaches
+
+To mitigate the disadvantages of SPAs, particularly regarding SEO and initial load time, hybrid approaches have emerged. Isomorphic applications, for instance, combine the concepts of SPAs and MPAs by executing JavaScript on both the client and the server. During the initial request, the server renders the complete HTML page, allowing for immediate display in the browser and better SEO. Subsequently, the entire SPA JavaScript bundle is loaded in the background, and all further interactions are handled client-side, similar to a regular SPA.
+
+While isomorphic applications address SEO concerns and improve initial content display, they can lead to a longer overall initial load time due to the need for both server-side rendering and client-side JavaScript loading. They also introduce more development complexity due to the need for state synchronization between client and server. Therefore, the choice of architecture—SPA, MPA, or hybrid—depends on the specific project requirements, weighing the benefits and drawbacks for each use case.
+
+### Conclusion
+
+In summary, SPAs offer a superior user experience through seamless navigation and interactivity, making them ideal for dynamic applications. However, their larger initial JavaScript payload and SEO challenges must be considered. For largely static websites, server-side rendering might be more appropriate. Hybrid approaches aim to combine the strengths of both SPAs and MPAs, particularly for interactivity, SEO, and performance. Ultimately, there is no one-size-fits-all solution; the optimal architecture depends on the specific demands and priorities of the application being developed.
+
+# SPA Mechanisms
+
+This chapter provides a technical foundation for understanding Single Page Applications (SPAs) by exploring their core mechanisms.
+
+### DOM Manipulations
+
+The process begins with the browser receiving a webpage as HTML text. A parser converts this into a Document Object Model (DOM), an object-based representation stored in memory. The DOM acts as the interface between HTML and dynamic JavaScript, enabling manipulation of document structure, behavior, and objects.
+
+To visually represent DOM manipulations, the browser calculates stylesheets, performs layout (determining element coordinates and placement), and finally renders elements on the screen. Browsers use a bit-system to asynchronously detect and update only modified DOM elements, optimizing rendering efficiency. For example, changing a number in an element only re-renders that specific element.
+
+### UI Frameworks and Libraries
+
+JavaScript frameworks and libraries simplify SPA development. A framework provides a complete toolkit for building and organizing applications, while a library offers a collection of pre-written code for specific functionalities. This distinction is crucial: frameworks guide the application's structure, while libraries provide targeted functions.
+
+The JavaScript ecosystem sees continuous evolution of frameworks, each aiming for reactivity, developer-friendliness, scalability, and performance. Given the vast number of existing solutions, this chapter focuses on React, a widely popular library.
+
+### Introduction to React
+
+React, developed by Facebook and open-source since 2013, is a popular JavaScript library preferred by many professional developers. It's "unopinionated," providing tools for reactive web development without dictating code structure or third-party library usage.
+
+A core concept in React is the virtual DOM, a virtual representation of the user interface. React uses a specific library for "reconciliation"—synchronizing the virtual DOM with the browser's actual DOM. When React's state changes, these changes are automatically reflected in the DOM. Unlike the simplistic JavaScript example, React combines state updates and only reflects necessary changes to avoid unnecessary re-renderings. When a component's parameters or states change, its `render()` function creates a new set of React elements (the virtual DOM). These new elements are then compared with the previous ones to determine minimal DOM updates.
+
+React uses JSX, a syntax extension to JavaScript, for developing code that gets compiled into native JavaScript. This allows developers to integrate display logic directly into the UI structure, creating modular and maintainable components. React components can manage their own state using hooks like `useState()`. Changes to this state trigger re-rendering of the component and its children. Event handlers (e.g., for buttons) modify the state, leading to dynamic updates.
+
+### Data Integration of RESTful APIs
+
+Data exchange between computers follows defined protocols, with HTTP being fundamental for web communication. AJAX (Asynchronous JavaScript and XML) is a programming pattern enabling web pages to retrieve data asynchronously without reloading. While its name includes XML, JSON is now preferred for faster processing.
+
+Traditionally, AJAX calls used `XMLHttpRequest` objects, but the modern Fetch API, which is Promise-based, offers a simpler approach to handling asynchronous requests.
+
+On the server-side, REST (Representational State Transfer) is a widely used design pattern for building APIs. REST APIs provide access to resources via defined HTTP methods (GET, POST, DELETE) and create an abstraction layer for database operations. This allows JavaScript clients, including those using AJAX, to communicate efficiently with the server.
+
+In React, the `useEffect` hook can be used to load data asynchronously, for example, from a REST API. The component initializes with an empty state, and when it renders, the `useEffect` hook fetches data. Once the data is received and parsed, it updates the component's state, causing it to re-render and display the new data.
+
+### Hybrid Applications
+
+As SPAs gained popularity, their initial drawbacks became more apparent. Hybrid applications address these issues by combining server-side rendering (SSR) with client-side interactivity. The initial request delivers a pre-rendered HTML document, allowing users to view content while JavaScript loads.
+
+The process of the client taking over and re-activating the server-generated HTML content is called "hydration." During hydration, missing event handlers are attached to relevant DOM elements, making them interactive. The challenge lies in determining which event handlers are needed and where to attach them, requiring knowledge of the application's current state and the framework's state.
+
+React, for example, would need to re-execute component code on the client to restore the necessary information for hydration. This can be resource-intensive, especially on mobile devices. To avoid this unnecessary overhead, the concept of "resumability" aims to serialize all relevant information directly into the HTML, including event listener mappings, user state, and framework state. A global event listener then handles all events lazily, reducing the amount of JavaScript loaded and eliminating redundant calculations on the client and server. While promising, frameworks implementing resumability are still in early development.
+

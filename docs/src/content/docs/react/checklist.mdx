@@ -1,0 +1,97 @@
+---
+title: Checklist
+---
+
+This checklist serves as your guide throughout the project. Work through the points step by step to develop the application and get familiar with the technologies.
+
+## Phase 1: Barebones React with Mock Data (The "Ugly" Prototype)
+
+**Goal:** Quickly get basic UI components rendering with static data using only React's built-in features. Understand the core component structure and state management.
+
+**No external libraries are allowed in this phase (except Vite for setup). Also don't spend time on styling to perfection, we will do this in the second Phase. Always remember the following
+
+> Make it work, then make it beautiful, then if you really, really have to, make it fast. 90 percent of the time, if you make it beautiful, it will already be fast. So really, just make it beautiful!
+> **Joe Armstrong**, Designer of the Erlang programming language
+
+If you are relatively new to React, HTML and/or CSS, you can take a look at these resources to help you out getting started.
+- [Interactive React Tutorial](https://react.dev/learn)
+- [Odin Project Frontend Foundations](https://www.theodinproject.com/paths/foundations/courses/foundations)
+- [FreeCodeCamp Fullstack Course](https://www.freecodecamp.org/learn/full-stack-developer/workshop-curriculum-outline/step-1)
+
+---
+
+**Checklist for this phase:**
+
+* [ ] **1. Initial React Setup with Vite**
+	* [ ] Start your project with [Vite](https://vite.dev/guide/), the fast build tool for modern web projects. Read the three Introduction Pages while making sure you understand why something like Vite is needed.
+	* [ ] Follow the steps in it to create a simple demo project. This means running the command `bun create vite` and select "React" and "TypeScript" (optional, but recommended for a better development experience).
+	* [ ] Play around with the project, starting it, changing it and so on to discover some of its features.
+
+* [ ] **2. Basic UI with Mock Data & Raw CSS**
+	* [ ] Create simple React components (e.g., `MovieList`, `MovieCard`, `MovieDetailPage`).
+	* [ ] **Use provided static mock data** (hardcoded array of movie objects) to display a list of movies.
+	* [ ] Implement basic navigation between the movie list and a detail page (e.g., using `useState` on a top level and conditional rendering – **no router yet**).
+	* [ ] Display basic movie details on the detail page using the mock data.
+	* [ ] Apply minimal styling using **raw CSS files** or inline styles. The goal is functionality, not aesthetics.
+	* [ ] Implement a simple search bar that filters the **mock data** using `useState`.
+
+* [ ] **3. Refactor to Fetch from TMDB API**
+	* [ ] **Replace your mock data** with actual data fetching from the TMDB API (e.g., the "popular movies" endpoint).
+	* [ ] Utilize `useState` for `loading`, `error`, and `data` states.
+	* [ ] Use `useEffect` to perform API calls when components mount or dependencies change.
+	* [ ] Implement a basic search functionality that triggers a new API call to the TMDB search endpoint using `useEffect`.
+	* [ ] **Reflect on the challenges:** Think about race conditions, manual state management, caching, and the complexity of managing multiple API calls in a bigger scale application with multiple developers working on it.
+
+### Phase 2: Learnings, Discussion, and the Big Rebuild
+
+**Goal:** Reflect on the limitations of Phase 1 and apply learnings to build a more robust, maintainable, and modern application.
+
+**This is where we "throw it all away" and start fresh with modern libraries.**
+**Take a look at the repository of this onboarding if you are stuck or want to validate that everything you have done follows good practices. It contains a starter project which already has all of the named tools configured.**
+
+While this onboarding guide tries to explain _why_ certain tools and libraries (like Tanstack Query, Tanstack Router, Tailwind CSS, Zustand, ShadCN UI, and the TMDB API) are used in this project, it is **your responsibility to consult their official documentation** to understand their detailed usage, APIs, and best practices. This guide provides the overarching strategy and context; the in-depth "how-to" is best learned directly from the source and by testing them out by yourself.
+
+---
+
+**Checklist for this phase:**
+
+* [ ] **1. Review and Discard (Mentally or Physically)**
+	* [ ] Take a step back. Review the code from Phase 1.
+	* [ ] Identify pain points: cumbersome state management, lack of proper routing, difficult styling, manual data fetching logic, no caching, etc.
+	* [ ] **Make a conscious decision to discard (or archive) the Phase 1 codebase.** We will create a new project or significantly refactor the existing one from a clean slate.
+
+* [ ] **2. Initial React Setup with Vite (Again)**
+	* [ ] Start a new Vite + React project (or clean your existing one).
+
+* [ ] **3. Integrate Biome for Code Formatting and Linting**
+	* [ ] Add [Biome](https://biomejs.dev/guides/getting-started/) to your project to enforce consistent code formatting and maintain a clean coding style.
+	* [ ] Configure Biome to automatically format your code on save and to run lint checks.
+	* [ ] **Purpose:** This step ensures your new codebase starts with good practices from day one, preventing style debates and catching common errors early.
+
+* [ ] **4. Integrating Modern Tools (The "Better" Prototype)**
+	* [ ] **Remove all CSS files and set up Tailwind CSS:** Integrate [Tailwind CSS](https://tailwindcss.com/docs/installation/using-vite) for a utility-first styling approach. This will be your primary styling method. Don't create css files to style your components. You project should only host one global css file, which configures tailwind and its components.
+	* [ ] **Implement Routing with Tanstack Router:** Set up [Tanstack Router](https://tanstack.com/router/latest/docs/framework/react/overview) for robust, type-safe routing and navigation between your movie list and detail pages.
+	* [ ] **Manage Data with Tanstack Query:** Integrate [Tanstack Query](https://tanstack.com/query/latest/docs/framework/react/overview) for all API interactions. Replace your useEffect/useState fetching logic with useQuery and useMutation hooks for efficient data management, caching, and error handling.
+	* [ ] **Add State Management with Zustand:** For global state like filter selections, integrate [Zustand](https://zustand.docs.pmnd.rs/getting-started/introduction). This will demonstrate managing application state outside of component trees. Ensure your Tanstack Query calls react to Zustand state changes to re-fetch filtered data.
+	* [ ] **Build UI with ShadCN Components:** Integrate [ShadCN UI](https://ui.shadcn.com/docs) and use its components to build your UI. Focus on:
+		* [ ] **Button, Input:** For search, filter application.
+		* [ ] **Sonner Toast:** For user feedback.
+		* [ ] **Drawer:** For implementing your genre filter options.
+	* [ ] **Implement all features:** Re-implement search, detail pages, and filter options using these new tools.
+
+---
+
+**Good luck with your prototyping project!** Embrace the learning curve, observe the challenges, and get ready to iterate. This foundational experience will be invaluable for building more robust React applications in the future.
+
+### **Beyond the Checklist: Learning from a Reference Implementation**
+
+Once you have completed both phases of this prototyping guide, a significant part of your learning will come from critical self-reflection. To aid this process, there is a **reference repository** available that implements all the concepts and features discussed here in a robust and well-structured manner.
+
+After completing your own implementation, take the time to **thoroughly review the reference repository**. Pay close attention to:
+
+*   **Overall Code Structure:** How are files and folders organized?
+*   **Component Design:** How are components broken down?
+*   **Data Flow:** How is state and data managed across the application?
+*   **Tool Integration:** Observe how the various libraries (Tanstack Query, Router, Zustand, ShadCN, Biome) are integrated and used together.
+
+**Crucially, compare it to your own solution.** If you find differences, especially in folder structure or architectural decisions, **think critically about *why* the reference repository might have chosen that approach.** What benefits does it offer in terms of maintainability, scalability, or readability? This comparison will solidify your understanding and help you internalize best practices for future projects.
