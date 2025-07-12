@@ -1,0 +1,73 @@
+name: Docs CD Pipeline
+
+on:
+  workflow_dispatch:
+  push:
+
+env:
+  BUN_VERSION: 1.2.18
+  WORKING_DIRECTORY: docs
+
+jobs:
+  files-changed:
+    uses: ./.github/workflows/files-changed.yml
+
+  lint:
+    runs-on: ubuntu-24.04
+
+    needs: files-changed
+    if: needs.files-changed.outputs.docs == 'true'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: ./.github/actions/setup-bun
+        with:
+          bun-version: ${{ env.BUN_VERSION }}
+          bun-lock-file: ${{ env.WORKING_DIRECTORY }}/bun.lock
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+
+      - name: Run Linter
+        run: bun run lint
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+
+  deploy:
+    runs-on: ubuntu-24.04
+
+    needs: [files-changed, lint]
+    if: needs.files-changed.outputs.docs == 'true'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: ./.github/actions/setup-bun
+        with:
+          bun-version: ${{ env.BUN_VERSION }}
+          bun-lock-file: ${{ env.WORKING_DIRECTORY }}/bun.lock
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+
+      - name: Build project
+        run: bun run --bun build
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+
+      - name: Deploy docs
+        uses: ayeressian/bunnycdn-storage-deploy@v2.3.0
+        with:
+          source: "${{ env.WORKING_DIRECTORY }}/dist"
+          destination: "."
+          storageZoneName: "${{ vars.STORAGE_NAME }}"
+          storagePassword: "${{ secrets.STORAGE_PASSWORD }}"
+          accessKey: "${{ secrets.STORAGE_KEY }}"
+          pullZoneId: "${{ vars.ZONE_ID }}"
+          upload: "true"
+          remove: "true"
+          purgePullZone: "true"
+          purgePullZoneDelay: "5"
