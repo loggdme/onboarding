@@ -1,0 +1,26 @@
+name: Setup Bun
+description: Setup Bun environment for the project
+
+inputs:
+  bun-version:
+    description: The version of Bun to use
+    required: true
+  bun-lock-file:
+    description: The path to the bun.lock file
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Cache Bun dependencies
+      uses: actions/cache@v4
+      with:
+        path: ~/.bun/install/cache
+        key: ${{ runner.os }}-bun-${{ hashFiles(inputs.bun-lock-file) }}
+        restore-keys: |
+          ${{ runner.os }}-bun-
+
+    - name: Setup Bun
+      uses: oven-sh/setup-bun@v2
+      with:
+        bun-version: ${{ inputs.bun-version }}

@@ -3,10 +3,8 @@ name: Changed Files
 on:
   workflow_call:
     outputs:
-      frontend:
-        value: ${{ jobs.files-changed.outputs.frontend }}
-      backend:
-        value: ${{ jobs.files-changed.outputs.backend }}
+      docs:
+        value: ${{ jobs.files-changed.outputs.docs }}
 
 jobs:
   files-changed:
@@ -14,8 +12,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 3
     outputs:
-      frontend: ${{ steps.changes.outputs.frontend }}
-      backend: ${{ steps.changes.outputs.backend }}
+      docs: ${{ steps.changes.outputs.docs }}
     steps:
       - uses: actions/checkout@v4
 

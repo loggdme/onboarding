@@ -1,13 +1,15 @@
 {
   "name": "docs",
   "type": "module",
-  "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "lint": "bun run lint:tsc & bun run lint:biome && wait",
+    "lint:tsc": "tsc --noEmit",
+    "lint:biome": "biome lint --error-on-warnings ."
   },
   "dependencies": {
     "@astrojs/starlight": "^0.34.4",
