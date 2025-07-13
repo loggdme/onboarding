@@ -18,7 +18,6 @@
   },
   "extensions": {
     "recommendations": [
-      "arktypeio.arkdark",
       "biomejs.biome",
       "EditorConfig.EditorConfig",
       "bradlc.vscode-tailwindcss",

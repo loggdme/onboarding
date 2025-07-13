@@ -1,20 +1,13 @@
-import { Terminal } from 'lucide-react';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { RouterProvider } from '@tanstack/react-router';
 
-import { ThemeProvider } from '$/components/common/theme/ThemeProvider';
-import { Alert, AlertDescription, AlertTitle } from '$/components/ui/alert';
+import { router } from '$/router/router';
+import { queryClient } from '$/services/client';
 
 export const App = () => {
   return (
-    <ThemeProvider>
-      <div className="flex h-screen items-center justify-center">
-        <div className="w-1/3">
-          <Alert>
-            <Terminal className="h-4 w-4" />
-            <AlertTitle>Loggd</AlertTitle>
-            <AlertDescription>Loggd is currently in active Development!</AlertDescription>
-          </Alert>
-        </div>
-      </div>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
   );
 };

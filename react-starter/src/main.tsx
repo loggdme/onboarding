@@ -6,6 +6,8 @@ import { App } from '$/app';
 import '$/styles/fonts.css';
 import '$/styles/theme.css';
 
+import '@total-typescript/ts-reset';
+
 createRoot(document.querySelector('#root') as Element).render(
   <StrictMode>
     <App />
