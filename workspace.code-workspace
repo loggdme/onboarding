@@ -2,6 +2,7 @@
   "folders": [
     { "path": "." },
     { "path": "react-starter" },
+    { "path": "react-finished" },
     { "path": "docs" }
   ],
   "settings": {

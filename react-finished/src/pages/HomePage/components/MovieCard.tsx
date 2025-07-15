@@ -1,0 +1,46 @@
+import { Link } from '@tanstack/react-router';
+import type { FC } from 'react';
+
+import { Card, CardDescription, CardHeader, CardTitle } from '$/components/ui/card';
+import { CircularProgress } from '$/components/ui/circular-progress';
+import { cn } from '$/lib/utils';
+import type { DiscoverdMovie } from '$/services/movies/movies.mapper';
+
+const _getProgressColor = (rating: number) => {
+  if (rating >= 70) return 'stroke-emerald-500';
+  if (rating >= 50) return 'stroke-yellow-500';
+  return 'stroke-red-500';
+};
+
+export const MovieCard: FC<{ movie: DiscoverdMovie }> = ({ movie }) => {
+  const rating = Math.round((movie.vote_average / 10) * 100);
+  const color = _getProgressColor(rating);
+  const formattedDate = new Date(movie.release_date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+
+  return (
+    <Link className="no-underline" params={{ id: String(movie.id) }} to="/movies/$id">
+      <Card className="h-full overflow-hidden p-0 pb-4">
+        <div className="relative mb-3">
+          <img alt={`${movie.title} poster`} src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} />
+          <div className="-bottom-5 absolute left-5">
+            <CircularProgress
+              className={cn('opacity-20', color)}
+              labelClassName="font-bold text-xs"
+              progressClassName={color}
+              progressStrokeWidth={5}
+              showLabel
+              size={40}
+              strokeWidth={5}
+              value={rating}
+            />
+          </div>
+        </div>
+
+        <CardHeader>
+          <CardTitle>{movie.title}</CardTitle>
+          <CardDescription>{formattedDate}</CardDescription>
+        </CardHeader>
+      </Card>
+    </Link>
+  );
+};
