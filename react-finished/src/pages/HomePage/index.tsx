@@ -20,7 +20,7 @@ export const HomePage = () => {
   const allMovies = data ? data.pages.flatMap((d) => d.results) : [];
 
   const rows = useMemo(() => {
-    if (breakpoint.columns === 0 || allMovies.length === 0) return 1;
+    if (breakpoint.columns === 0 || allMovies.length === 0) return 5;
     const total = Math.max(Math.ceil(allMovies.length / breakpoint.columns), 1);
     return hasNextPage ? total + 1 : total;
   }, [allMovies.length, hasNextPage]);
@@ -31,7 +31,6 @@ export const HomePage = () => {
 
   const rowVirtualizer = useWindowVirtualizer({
     gap,
-    enabled: !!data,
     count: rows,
     paddingStart: 8,
     paddingEnd: 8,
@@ -42,7 +41,6 @@ export const HomePage = () => {
 
   const columnVirtualizer = useVirtualizer({
     horizontal: true,
-    enabled: !!data,
     paddingStart: 8,
     paddingEnd: 8,
     count: breakpoint.columns,
@@ -60,8 +58,6 @@ export const HomePage = () => {
       fetchNextPage();
     }
   }, [hasNextPage, fetchNextPage, allMovies.length, isFetchingNextPage, rowItems]);
-
-  if (!data) return;
 
   return (
     <div ref={parentRef}>
@@ -81,17 +77,11 @@ export const HomePage = () => {
                 gridTemplateColumns: `repeat(${breakpoint.columns}, minmax(0, 1fr))`,
               }}
             >
-              {isLoaderRow ? (
-                <div className="loader-card" style={{ width: '100%' }}>
-                  {hasNextPage ? 'Loading more...' : 'Nothing more to load'}
+              {columnItems.map((column) => (
+                <div data-index={column.index} key={column.key} ref={columnVirtualizer.measureElement}>
+                  <MovieCard isLoading={isLoaderRow || !data} movie={allMovies[breakpoint.columns * row.index + column.index]} />
                 </div>
-              ) : (
-                columnItems.map((column) => (
-                  <div data-index={column.index} key={column.key} ref={columnVirtualizer.measureElement}>
-                    <MovieCard movie={allMovies[breakpoint.columns * row.index + column.index]} />
-                  </div>
-                ))
-              )}
+              ))}
             </div>
           );
         })}

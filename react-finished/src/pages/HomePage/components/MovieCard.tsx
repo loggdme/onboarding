@@ -12,7 +12,23 @@ const _getProgressColor = (rating: number) => {
   return 'stroke-red-500';
 };
 
-export const MovieCard: FC<{ movie: DiscoverdMovie }> = ({ movie }) => {
+const _LoadingMovieCard = () => {
+  return (
+    <div className="animate-pulse rounded-xl bg-accent">
+      <Card className="h-full p-0 pb-4 opacity-0">
+        <div className="mb-3 aspect-[2/3] w-full bg-red-50" />
+        <CardHeader>
+          <CardTitle>.</CardTitle>
+          <CardDescription>.</CardDescription>
+        </CardHeader>
+      </Card>
+    </div>
+  );
+};
+
+export const MovieCard: FC<{ movie: DiscoverdMovie; isLoading?: boolean }> = ({ movie, isLoading }) => {
+  if (isLoading) return <_LoadingMovieCard />;
+
   const rating = Math.round((movie.vote_average / 10) * 100);
   const color = _getProgressColor(rating);
   const formattedDate = new Date(movie.release_date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
@@ -21,7 +37,7 @@ export const MovieCard: FC<{ movie: DiscoverdMovie }> = ({ movie }) => {
     <Link className="group focus-visible:outline-none" params={{ id: String(movie.id) }} to="/movies/$id">
       <Card className="h-full overflow-hidden p-0 pb-4 group-focus-visible:outline-3 group-focus-visible:outline-primary group-focus-visible:outline-offset-4">
         <div className="relative mb-3">
-          <div className="aspect-[2/3] ">
+          <div className="aspect-[2/3]">
             <img alt={`${movie.title} poster`} src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} />
           </div>
           <div className="-bottom-5 absolute left-5">
