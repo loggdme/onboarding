@@ -1,8 +1,10 @@
-import { queryOptions } from '@tanstack/react-query';
+import { infiniteQueryOptions } from '@tanstack/react-query';
 
 import { discoverMovies } from '$/services/movies/movies.fetch';
 
-export const discoverMoviesQuery = queryOptions({
+export const discoverMoviesQuery = infiniteQueryOptions({
   queryKey: ['movies'],
-  queryFn: ({ signal }) => discoverMovies(signal),
+  queryFn: ({ signal, pageParam }) => discoverMovies(signal, { page: pageParam }),
+  initialPageParam: 1,
+  getNextPageParam: (lastPage) => (lastPage.page + 1 < lastPage.total_pages ? lastPage.page + 1 : undefined),
 });

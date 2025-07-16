@@ -18,10 +18,12 @@ export const MovieCard: FC<{ movie: DiscoverdMovie }> = ({ movie }) => {
   const formattedDate = new Date(movie.release_date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
 
   return (
-    <Link className="no-underline" params={{ id: String(movie.id) }} to="/movies/$id">
-      <Card className="h-full overflow-hidden p-0 pb-4">
+    <Link className="group focus-visible:outline-none" params={{ id: String(movie.id) }} to="/movies/$id">
+      <Card className="h-full overflow-hidden p-0 pb-4 group-focus-visible:outline-3 group-focus-visible:outline-primary group-focus-visible:outline-offset-4">
         <div className="relative mb-3">
-          <img alt={`${movie.title} poster`} src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} />
+          <div className="aspect-[2/3] ">
+            <img alt={`${movie.title} poster`} src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} />
+          </div>
           <div className="-bottom-5 absolute left-5">
             <CircularProgress
               className={cn('opacity-20', color)}

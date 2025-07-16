@@ -1,8 +1,18 @@
 import { env } from '$/config';
 import { DiscoverMovieResponseSchema } from '$/services/movies/movies.mapper';
 
-export const discoverMovies = async (signal: AbortSignal) => {
-  const url = 'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc';
+interface DiscoverMovieOptions {
+  page?: number;
+}
+
+export const discoverMovies = async (signal: AbortSignal, options?: DiscoverMovieOptions) => {
+  const url = new URL('https://api.themoviedb.org/3/discover/movie');
+  url.searchParams.set('include_adult', 'false');
+  url.searchParams.set('include_video', 'false');
+  url.searchParams.set('language', 'en-US');
+  url.searchParams.set('page', options?.page?.toString() || '1');
+  url.searchParams.set('sort_by', 'popularity.desc');
+
   const response = await fetch(url, {
     signal,
     headers: { Authorization: `Bearer ${env.VITE_TMDB_API_KEY}` },
