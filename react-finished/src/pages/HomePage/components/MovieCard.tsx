@@ -15,9 +15,9 @@ const _getProgressColor = (rating: number) => {
 const _LoadingMovieCard = () => {
   return (
     <div className="animate-pulse rounded-xl bg-accent">
-      <Card className="h-full p-0 pb-4 opacity-0">
-        <div className="mb-3 aspect-[2/3] w-full bg-red-50" />
-        <CardHeader>
+      <Card className="h-full p-0 opacity-0">
+        <div className="aspect-[2/3] w-full bg-red-50" />
+        <CardHeader className="my-4">
           <CardTitle>.</CardTitle>
           <CardDescription>.</CardDescription>
         </CardHeader>
@@ -35,10 +35,10 @@ export const MovieCard: FC<{ movie: DiscoverdMovie; isLoading?: boolean }> = ({ 
 
   return (
     <Link className="group focus-visible:outline-none" params={{ id: String(movie.id) }} to="/movies/$id">
-      <Card className="h-full overflow-hidden p-0 pb-4 group-focus-visible:outline-3 group-focus-visible:outline-primary group-focus-visible:outline-offset-4">
-        <div className="relative mb-3">
+      <Card className="h-full overflow-hidden p-0 group-focus-visible:outline-3 group-focus-visible:outline-primary group-focus-visible:outline-offset-4">
+        <div className="relative">
           <div className="aspect-[2/3]">
-            <img alt={`${movie.title} poster`} src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} />
+            <img alt={`${movie.title} poster`} className="w-full" src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} />
           </div>
           <div className="-bottom-5 absolute left-5">
             <CircularProgress
@@ -54,8 +54,8 @@ export const MovieCard: FC<{ movie: DiscoverdMovie; isLoading?: boolean }> = ({ 
           </div>
         </div>
 
-        <CardHeader>
-          <CardTitle>{movie.title}</CardTitle>
+        <CardHeader className="my-4">
+          <CardTitle className="line-clamp-1">{movie.title}</CardTitle>
           <CardDescription>{formattedDate}</CardDescription>
         </CardHeader>
       </Card>

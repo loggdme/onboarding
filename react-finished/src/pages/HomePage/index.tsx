@@ -1,63 +1,58 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { useVirtualizer, useWindowVirtualizer } from '@tanstack/react-virtual';
-import { useEffect, useMemo, useRef } from 'react';
+import { useWindowVirtualizer } from '@tanstack/react-virtual';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { MovieCard } from '$/pages/HomePage/components/MovieCard';
 import { discoverMoviesQuery } from '$/services/movies/movies.queries';
 
 const gap = 16;
-const breakpoint = { maxWidth: 672, columns: 5 };
-
-// https://github.com/TanStack/virtual/discussions/710
-// TODO: Use a more accurate estimate based on the actual movie card size
-// TODO: Add breakpoints for different screen sizes
-// TODO: Test for mobile devices
+type Breakpoint = { maxWidth: number; columns: number };
+const breakpoints: Breakpoint[] = [
+  { maxWidth: 1536, columns: 5 },
+  { maxWidth: 1280, columns: 5 },
+  { maxWidth: 1024, columns: 4 },
+  { maxWidth: 768, columns: 3 },
+  { maxWidth: 640, columns: 2 },
+];
 
 export const HomePage = () => {
   const parentRef = useRef<HTMLDivElement>(null);
+  const [breakpoint, setBreakpoint] = useState<Breakpoint>({ maxWidth: 0, columns: 1 });
 
   const { data, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteQuery(discoverMoviesQuery);
   const allMovies = data ? data.pages.flatMap((d) => d.results) : [];
 
-  const rows = useMemo(() => {
-    if (breakpoint.columns === 0 || allMovies.length === 0) return 5;
-    const total = Math.max(Math.ceil(allMovies.length / breakpoint.columns), 1);
-    return hasNextPage ? total + 1 : total;
-  }, [allMovies.length, hasNextPage]);
-
-  const estimatedSize = useMemo(() => {
-    return (breakpoint.maxWidth - (breakpoint.columns - 1) * gap) / breakpoint.columns;
+  const onSetBreakpoint = useCallback(() => {
+    const breakpoint = breakpoints.find((bp) => window.innerWidth >= bp.maxWidth);
+    setBreakpoint(breakpoint ? breakpoint : { maxWidth: 0, columns: 1 });
   }, []);
 
-  const rowVirtualizer = useWindowVirtualizer({
-    gap,
-    count: rows,
-    paddingStart: 8,
-    paddingEnd: 8,
-    overscan: 0,
-    scrollMargin: parentRef.current?.offsetTop ?? 0,
-    estimateSize: () => 534,
-  });
+  const rows = useMemo(() => {
+    if (breakpoint.columns === 0 || allMovies.length === 0) return 5;
+    return Math.max(Math.ceil(allMovies.length / breakpoint.columns), 5);
+  }, [allMovies.length, breakpoint]);
 
-  const columnVirtualizer = useVirtualizer({
-    horizontal: true,
-    paddingStart: 8,
-    paddingEnd: 8,
-    count: breakpoint.columns,
-    getScrollElement: () => parentRef.current,
-    estimateSize: () => estimatedSize,
+  const rowVirtualizer = useWindowVirtualizer({
+    gap: gap,
+    count: rows,
+    overscan: 1,
+    paddingEnd: 20,
+    estimateSize: () => 42 + 24 + (parentRef.current?.clientWidth ?? 0) / 2 / 3,
   });
 
   const rowItems = rowVirtualizer.getVirtualItems();
-  const columnItems = columnVirtualizer.getVirtualItems();
 
   useEffect(() => {
-    const [lastItem] = [...rowItems].reverse();
-    if (!lastItem) return;
-    if (lastItem.index >= Math.floor(allMovies.length / breakpoint.columns) - 1 && hasNextPage && !isFetchingNextPage) {
+    if (rowItems[rowItems.length - 1]?.index >= Math.floor(allMovies.length / breakpoint.columns) - 1 && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
     }
-  }, [hasNextPage, fetchNextPage, allMovies.length, isFetchingNextPage, rowItems]);
+  }, [hasNextPage, fetchNextPage, allMovies.length, isFetchingNextPage, rowItems, breakpoint.columns]);
+
+  useEffect(() => {
+    onSetBreakpoint();
+    window.addEventListener('resize', onSetBreakpoint);
+    return () => window.removeEventListener('resize', onSetBreakpoint);
+  }, [onSetBreakpoint]);
 
   return (
     <div ref={parentRef}>
@@ -77,10 +72,8 @@ export const HomePage = () => {
                 gridTemplateColumns: `repeat(${breakpoint.columns}, minmax(0, 1fr))`,
               }}
             >
-              {columnItems.map((column) => (
-                <div data-index={column.index} key={column.key} ref={columnVirtualizer.measureElement}>
-                  <MovieCard isLoading={isLoaderRow || !data} movie={allMovies[breakpoint.columns * row.index + column.index]} />
-                </div>
+              {[...Array(breakpoint.columns).keys()].map((column) => (
+                <MovieCard isLoading={isLoaderRow || !data} key={column} movie={allMovies[breakpoint.columns * row.index + column]} />
               ))}
             </div>
           );

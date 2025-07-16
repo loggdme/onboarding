@@ -6,7 +6,7 @@ export const DefaultLayout = createRoute({
   id: 'default-layout',
   getParentRoute: () => RootRoute,
   component: () => (
-    <div className="container mx-auto h-screen w-full py-8">
+    <div className="container mx-auto h-screen w-full p-5">
       <Outlet />
     </div>
   ),

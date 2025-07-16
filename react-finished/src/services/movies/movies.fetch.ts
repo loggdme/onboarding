@@ -6,7 +6,7 @@ interface DiscoverMovieOptions {
 }
 
 export const discoverMovies = async (signal: AbortSignal, options?: DiscoverMovieOptions) => {
-  await new Promise((resolve) => setTimeout(resolve, 3000));
+  // await new Promise((resolve) => setTimeout(resolve, 3000));
 
   const url = new URL('https://api.themoviedb.org/3/discover/movie');
   url.searchParams.set('include_adult', 'false');
