@@ -1,28 +1,14 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.1.1/schema.json",
-  "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
-  "files": { "ignoreUnknown": false, "includes": ["**/*.ts", "**/*.tsx", "**/*.json", "**/*.css", "**/*.html"] },
-  "formatter": { "enabled": true, "indentStyle": "space", "indentWidth": 2, "lineWidth": 150, "lineEnding": "lf" },
+  "$schema": "https://biomejs.dev/schemas/2.1.2/schema.json",
+  "extends": ["ultracite"],
   "linter": {
-    "enabled": true,
-    "domains": { "react": "recommended" },
     "rules": {
-      "recommended": true,
-      "correctness": { "noUnusedImports": "error" },
-      "style": { "useImportType": "error", "useNodejsImportProtocol": "error" },
-      "nursery": { "useSortedClasses": "error" }
-    }
-  },
-  "assist": {
-    "enabled": true,
-    "actions": {
-      "source": {
-        "useSortedAttributes": "on",
-        "organizeImports": { "level": "on", "options": { "groups": [":NODE:", ":BUN:", ":BLANK_LINE:", ":PACKAGE:", ":BLANK_LINE:", ":ALIAS:"] } }
+      "performance": {
+        "noImgElement": "off"
+      },
+      "nursery": {
+        "noUnknownAtRule": "off"
       }
     }
-  },
-  "javascript": { "formatter": { "quoteStyle": "single", "trailingCommas": "all", "semicolons": "always" } },
-  "css": { "formatter": { "enabled": true } },
-  "html": { "formatter": { "enabled": true } }
+  }
 }

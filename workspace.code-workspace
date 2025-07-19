@@ -15,7 +15,8 @@
     "workbench.editor.labelFormat": "short",
     "explorer.fileNesting.enabled": true,
     "explorer.fileNesting.expand": false,
-    "explorer.autoReveal": false
+    "explorer.autoReveal": false,
+    "emmet.showExpandedAbbreviation": "never"
   },
   "extensions": {
     "recommendations": [

@@ -11,5 +11,5 @@ import '@total-typescript/ts-reset';
 createRoot(document.querySelector('#root') as Element).render(
   <StrictMode>
     <App />
-  </StrictMode>,
+  </StrictMode>
 );

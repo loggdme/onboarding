@@ -1,6 +1,6 @@
 import { createRoute, Outlet } from '@tanstack/react-router';
 
-import { RootRoute } from '$/router/RootRoute';
+import { RootRoute } from '$/router/root-route';
 
 export const DefaultLayout = createRoute({
   id: 'default-layout',

@@ -1,14 +1,23 @@
 import { Link } from '@tanstack/react-router';
 import type { FC } from 'react';
 
-import { Card, CardDescription, CardHeader, CardTitle } from '$/components/ui/card';
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '$/components/ui/card';
 import { CircularProgress } from '$/components/ui/circular-progress';
 import { cn } from '$/lib/utils';
 import type { DiscoverdMovie } from '$/services/movies/movies.mapper';
 
 const _getProgressColor = (rating: number) => {
-  if (rating >= 70) return 'stroke-emerald-500';
-  if (rating >= 50) return 'stroke-yellow-500';
+  if (rating >= 70) {
+    return 'stroke-emerald-500';
+  }
+  if (rating >= 50) {
+    return 'stroke-yellow-500';
+  }
   return 'stroke-red-500';
 };
 
@@ -26,19 +35,35 @@ const _LoadingMovieCard = () => {
   );
 };
 
-export const MovieCard: FC<{ movie: DiscoverdMovie; isLoading?: boolean }> = ({ movie, isLoading }) => {
-  if (isLoading) return <_LoadingMovieCard />;
+export const MovieCard: FC<{ movie: DiscoverdMovie; isLoading?: boolean }> = ({
+  movie,
+  isLoading,
+}) => {
+  if (isLoading) {
+    return <_LoadingMovieCard />;
+  }
 
   const rating = Math.round((movie.vote_average / 10) * 100);
   const color = _getProgressColor(rating);
-  const formattedDate = new Date(movie.release_date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+  const formattedDate = new Date(movie.release_date).toLocaleDateString(
+    undefined,
+    { year: 'numeric', month: 'long', day: 'numeric' }
+  );
 
   return (
-    <Link className="group focus-visible:outline-none" params={{ id: String(movie.id) }} to="/movies/$id">
+    <Link
+      className="group focus-visible:outline-none"
+      params={{ id: String(movie.id) }}
+      to="/movies/$id"
+    >
       <Card className="h-full overflow-hidden p-0 group-focus-visible:outline-3 group-focus-visible:outline-primary group-focus-visible:outline-offset-4">
         <div className="relative">
           <div className="aspect-[2/3]">
-            <img alt={`${movie.title} poster`} className="w-full" src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} />
+            <img
+              alt={`${movie.title} poster`}
+              className="w-full"
+              src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+            />
           </div>
           <div className="-bottom-5 absolute left-5">
             <CircularProgress

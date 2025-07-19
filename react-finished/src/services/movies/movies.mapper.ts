@@ -1,6 +1,8 @@
-import * as z from 'zod/mini';
+import z from 'zod/mini';
 
-export type DiscoverdMovie = z.infer<typeof DiscoverMovieResponseSchema>['results'][number];
+export type DiscoverdMovie = z.infer<
+  typeof DiscoverMovieResponseSchema
+>['results'][number];
 export const DiscoverMovieResponseSchema = z.object({
   page: z.number(),
   total_pages: z.number(),
@@ -14,6 +16,6 @@ export const DiscoverMovieResponseSchema = z.object({
       overview: z.string(),
       vote_average: z.number(),
       vote_count: z.number(),
-    }),
+    })
   ),
 });

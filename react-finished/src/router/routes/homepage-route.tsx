@@ -1,7 +1,7 @@
 import { createRoute } from '@tanstack/react-router';
 
-import { HomePage } from '$/pages/HomePage';
-import { DefaultLayout } from '$/router/layouts/DefaultLayout';
+import { HomePage } from '$/pages/home-page';
+import { DefaultLayout } from '$/router/layouts/default-layout';
 
 export const HomepageRoute = createRoute({
   path: '/',
