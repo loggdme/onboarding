@@ -3,12 +3,8 @@
   "extends": ["ultracite"],
   "linter": {
     "rules": {
-      "performance": {
-        "noImgElement": "off"
-      },
-      "nursery": {
-        "noUnknownAtRule": "off"
-      }
+      "performance": { "noImgElement": "off", "noNamespaceImport": "off" },
+      "nursery": { "noUnknownAtRule": "off" }
     }
   }
 }

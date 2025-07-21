@@ -4,6 +4,9 @@ import { config } from '$/config';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
-    queries: { staleTime: config.queryClient.defaultStaleTime },
+    queries: {
+      staleTime: config.queryClient.defaultStaleTime,
+      retry: config.queryClient.defaultRetry,
+    },
   },
 });

@@ -5,11 +5,7 @@ interface CircularProgressProps {
   renderLabel?: (progress: number) => number | string;
   size?: number;
   strokeWidth?: number;
-  circleStrokeWidth?: number;
-  progressStrokeWidth?: number;
-  shape?: 'square' | 'round';
-  className?: string;
-  progressClassName?: string;
+  colorClassName?: string;
   labelClassName?: string;
   showLabel?: boolean;
 }
@@ -17,17 +13,13 @@ interface CircularProgressProps {
 export const CircularProgress = ({
   value,
   renderLabel,
-  className,
-  progressClassName,
+  colorClassName,
   labelClassName,
   showLabel,
-  shape = 'round',
   size = 100,
-  strokeWidth,
-  circleStrokeWidth = 10,
-  progressStrokeWidth = 10,
+  strokeWidth = 10,
 }: CircularProgressProps) => {
-  const radius = size / 2 - circleStrokeWidth / 2;
+  const radius = size / 2 - strokeWidth / 2;
   const circumference = Math.ceil(3.14 * radius * 2);
   const percentage = Math.ceil(circumference * ((100 - value) / 100));
 
@@ -45,29 +37,35 @@ export const CircularProgress = ({
         >
           <title>Circular Progress</title>
           <circle
-            className={cn('stroke-primary/25', className)}
+            className={colorClassName ?? 'stroke-primary/25'}
             cx={size / 2}
             cy={size / 2}
             fill="transparent"
+            opacity={0.2}
             r={radius}
             strokeDasharray={circumference}
             strokeDashoffset="0"
-            strokeWidth={strokeWidth ?? circleStrokeWidth}
+            strokeWidth={strokeWidth}
           />
           <circle
-            className={cn('stroke-primary', progressClassName)}
+            className={colorClassName ?? 'stroke-primary'}
             cx={size / 2}
             cy={size / 2}
             fill="transparent"
             r={radius}
             strokeDasharray={circumference}
             strokeDashoffset={percentage}
-            strokeLinecap={shape}
-            strokeWidth={strokeWidth ?? progressStrokeWidth}
+            strokeLinecap="round"
+            strokeWidth={strokeWidth}
           />
         </svg>
         {showLabel && (
-          <div className={cn('absolute inset-0 flex items-center justify-center text-md', labelClassName)}>
+          <div
+            className={cn(
+              'absolute inset-0 flex items-center justify-center',
+              labelClassName
+            )}
+          >
             {renderLabel ? renderLabel(value) : value}
           </div>
         )}

@@ -2,7 +2,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { useWindowVirtualizer } from '@tanstack/react-virtual';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import { MovieCard } from '$/pages/home-page/components/movie-card';
+import { MovieCard } from '$/pages/home-page/components/movie-card/movie-card';
 import { discoverMoviesQuery } from '$/services/movies/movies.queries';
 
 const gap = 16;
