@@ -1,21 +1,12 @@
-import { useInfiniteQuery } from '@tanstack/react-query';
 import { useWindowVirtualizer } from '@tanstack/react-virtual';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import { MovieCard } from '$/pages/home-page/components/movie-card/movie-card';
-import { discoverMoviesQuery } from '$/services/movies/movies.queries';
+import { config } from '$/config';
+import type { Breakpoint } from '$/lib/utils';
+import { MovieCard } from '$/pages/discover-movies-page/components/movie-card/movie-card';
+import { useDiscoverMovies } from '$/pages/discover-movies-page/hooks/use-discover-movies';
 
-const gap = 16;
-type Breakpoint = { maxWidth: number; columns: number };
-const breakpoints: Breakpoint[] = [
-  { maxWidth: 1536, columns: 5 },
-  { maxWidth: 1280, columns: 5 },
-  { maxWidth: 1024, columns: 4 },
-  { maxWidth: 768, columns: 3 },
-  { maxWidth: 640, columns: 2 },
-];
-
-export const HomePage = () => {
+export const DiscoverMovieResults = () => {
   const parentRef = useRef<HTMLDivElement>(null);
   const [breakpoint, setBreakpoint] = useState<Breakpoint>({
     maxWidth: 0,
@@ -23,11 +14,14 @@ export const HomePage = () => {
   });
 
   const { data, isFetchingNextPage, fetchNextPage, hasNextPage } =
-    useInfiniteQuery(discoverMoviesQuery);
+    useDiscoverMovies();
+
   const allMovies = data ? data.pages.flatMap((d) => d.results) : [];
 
   const onSetBreakpoint = useCallback(() => {
-    const b = breakpoints.find((bp) => window.innerWidth >= bp.maxWidth);
+    const b = config.discoverMoviePage.cardColumns.find(
+      (bp) => window.innerWidth >= bp.maxWidth
+    );
     setBreakpoint(b ? b : { maxWidth: 0, columns: 1 });
   }, []);
 
@@ -39,7 +33,7 @@ export const HomePage = () => {
   }, [allMovies.length, breakpoint]);
 
   const rowVirtualizer = useWindowVirtualizer({
-    gap,
+    gap: config.discoverMoviePage.cardGap,
     count: rows,
     overscan: 1,
     paddingEnd: 20,
@@ -91,7 +85,7 @@ export const HomePage = () => {
               ref={rowVirtualizer.measureElement}
               style={{
                 transform: `translateY(${row.start - rowVirtualizer.options.scrollMargin}px)`,
-                gap: `${gap}px`,
+                gap: `${config.discoverMoviePage.cardGap}px`,
                 gridTemplateColumns: `repeat(${breakpoint.columns}, minmax(0, 1fr))`,
               }}
             >

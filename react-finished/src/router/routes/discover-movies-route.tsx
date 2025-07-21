@@ -1,10 +1,10 @@
 import { createRoute } from '@tanstack/react-router';
 
-import { HomePage } from '$/pages/home-page';
+import { DiscoverMoviesPage } from '$/pages/discover-movies-page/discover-movies-page';
 import { DefaultLayout } from '$/router/layouts/default-layout';
 
-export const HomepageRoute = createRoute({
+export const DiscoverMoviesRoute = createRoute({
   path: '/',
   getParentRoute: () => DefaultLayout,
-  component: HomePage,
+  component: DiscoverMoviesPage,
 });

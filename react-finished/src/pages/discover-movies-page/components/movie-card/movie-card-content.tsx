@@ -1,9 +1,10 @@
 import { Link } from '@tanstack/react-router';
 import type { FC } from 'react';
 
+import { MoviePoster } from '$/components/movie-poster';
 import { CircularProgress } from '$/components/ui/circular-progress';
 import { formatDisplayDate } from '$/lib/date';
-import { getRatingColorClassName } from '$/pages/home-page/utils/rating';
+import { getRatingColorClassName } from '$/lib/rating';
 import type { DiscoverdMovie } from '$/services/movies/movies.mapper';
 
 export type MovieCardProps = { movie: DiscoverdMovie };
@@ -21,14 +22,7 @@ export const MovieCardContent: FC<MovieCardProps> = ({ movie }) => {
     >
       <div className="flex h-full flex-col gap-6 overflow-hidden rounded-xl border bg-card p-0 text-card-foreground shadow-sm group-focus-visible:outline-3 group-focus-visible:outline-primary group-focus-visible:outline-offset-4">
         <div className="relative">
-          <div className="aspect-[2/3]">
-            <img
-              alt={`${movie.title} poster`}
-              className="w-full"
-              loading="lazy"
-              src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-            />
-          </div>
+          <MoviePoster posterPath={movie.poster_path} />
           <div className="-bottom-5 absolute left-5">
             <CircularProgress
               colorClassName={color}

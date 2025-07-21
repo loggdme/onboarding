@@ -6,5 +6,24 @@
       "performance": { "noImgElement": "off", "noNamespaceImport": "off" },
       "nursery": { "noUnknownAtRule": "off" }
     }
+  },
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": {
+          "level": "on",
+          "options": {
+            "groups": [
+              ":NODE:",
+              ":BUN:",
+              ":BLANK_LINE:",
+              ":PACKAGE:",
+              ":BLANK_LINE:",
+              ":ALIAS:"
+            ]
+          }
+        }
+      }
+    }
   }
 }
