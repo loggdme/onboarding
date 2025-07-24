@@ -13,5 +13,10 @@ export const useDiscoverMovies = () => {
     ? query.data.pages.flatMap((d) => d.results)
     : [];
 
-  return { ...query, totalResults, allMovies };
+  return {
+    ...query,
+    totalResults,
+    displayedMovies: allMovies.length,
+    allMovies,
+  };
 };

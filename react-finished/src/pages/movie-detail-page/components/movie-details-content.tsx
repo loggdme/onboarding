@@ -1,6 +1,7 @@
 import { Link } from '@tanstack/react-router';
 import { ArrowLeft } from 'lucide-react';
 import type { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { MoviePoster } from '$/components/movie-poster';
 import { CircularProgress } from '$/components/ui/circular-progress';
@@ -11,6 +12,8 @@ import type { MovieDetails } from '$/services/movies/movies.mapper';
 export type MovieDetailsProps = { movie: MovieDetails };
 
 export const MovieDetailsContent: FC<MovieDetailsProps> = ({ movie }) => {
+  const { t } = useTranslation('movie_details');
+
   const rating = Math.round((movie.vote_average / 10) * 100);
   const formattedDate = formatDisplayDate(movie.release_date);
   const color = getRatingColorClassName(rating);
@@ -20,7 +23,7 @@ export const MovieDetailsContent: FC<MovieDetailsProps> = ({ movie }) => {
       <div className="flex flex-col gap-5">
         <Link className="flex items-center gap-2 text-sm" to="/">
           <ArrowLeft />
-          <span>Back to Overview</span>
+          <span>{t('back_to_overview')}</span>
         </Link>
 
         <div className="flex flex-col gap-8 sm:flex-row">

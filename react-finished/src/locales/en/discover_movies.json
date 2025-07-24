@@ -1,0 +1,5 @@
+{
+  "title": "Discover Movies",
+  "description": "Use the search bar to find your favorite movies or explore the latest releases.",
+  "results_found": "{{totalResults}} results found. Displaying {{displayedMovies}} movies."
+}

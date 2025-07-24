@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 import {
   Select,
   SelectContent,
@@ -17,7 +19,9 @@ import {
 } from '$/services/movies/movies.fetch';
 
 export const DiscoverMoviesActiveFilter = () => {
-  const { totalResults, allMovies, isLoading } = useDiscoverMovies();
+  const { t } = useTranslation(['discover_movies', 'sort_options']);
+
+  const { totalResults, displayedMovies, isLoading } = useDiscoverMovies();
   const { sortResults } = useDiscoverMovieActions();
   const sortBy = useDiscoverMovieSortBy();
 
@@ -29,13 +33,13 @@ export const DiscoverMoviesActiveFilter = () => {
           value={sortBy}
         >
           <SelectTrigger className="w-full">
-            <SelectValue>{sortBy}</SelectValue>
+            <SelectValue>{t(`sort_options:${sortBy}`)}</SelectValue>
           </SelectTrigger>
 
           <SelectContent>
             {discoverMovieSortByOptions.map((option) => (
               <SelectItem key={option} value={option}>
-                {option}
+                {t(`sort_options:${option}`)}
               </SelectItem>
             ))}
           </SelectContent>
@@ -48,8 +52,7 @@ export const DiscoverMoviesActiveFilter = () => {
           isLoading && 'animate-pulse bg-accent text-transparent'
         )}
       >
-        {totalResults} Ergebnisse gefunden. Davon werden {allMovies.length}{' '}
-        Filme angezeigt.
+        {t('discover_movies:description', { totalResults, displayedMovies })}
       </div>
     </div>
   );

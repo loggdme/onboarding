@@ -1,0 +1,5 @@
+{
+  "title": "Filme entdecken",
+  "description": "Nutze die Suchleiste, um deine Lieblingsfilme zu finden oder die neuesten Veröffentlichungen zu erkunden.",
+  "results_found": "{{totalResults}} Ergebnisse gefunden. Davon werden {{displayedMovies}} Filme angezeigt."
+}

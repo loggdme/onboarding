@@ -1,0 +1,16 @@
+{
+  "original_title.asc": "Originaltitel aufsteigend",
+  "original_title.desc": "Originaltitel absteigend",
+  "popularity.asc": "Beliebtheit aufsteigend",
+  "popularity.desc": "Beliebtheit absteigend",
+  "revenue.asc": "Einnahmen aufsteigend",
+  "revenue.desc": "Einnahmen absteigend",
+  "primary_release_date.asc": "Veröffentlichungsdatum aufsteigend",
+  "primary_release_date.desc": "Veröffentlichungsdatum absteigend",
+  "title.asc": "Titel aufsteigend",
+  "title.desc": "Titel absteigend",
+  "vote_average.asc": "Durchschnittliche Bewertung aufsteigend",
+  "vote_average.desc": "Durchschnittliche Bewertung absteigend",
+  "vote_count.asc": "Anzahl der Bewertungen aufsteigend",
+  "vote_count.desc": "Anzahl der Bewertungen absteigend"
+}
