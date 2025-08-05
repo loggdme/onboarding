@@ -59,7 +59,7 @@ jobs:
         working-directory: ${{ env.WORKING_DIRECTORY }}
 
       - name: Deploy docs
-        uses: ayeressian/bunnycdn-storage-deploy@v2.3.0
+        uses: ayeressian/bunnycdn-storage-deploy@v2.4.0
         with:
           source: "${{ env.WORKING_DIRECTORY }}/dist"
           destination: "."
